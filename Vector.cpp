@@ -61,11 +61,19 @@ class Vector {
             size--;
             insert(lastValue, 0);
         }
+        void leftRotate() {
+            int firstValue = myVector[0]; 
+            for(int i = 1; i < size; i++) { // 0 1 2 3 4
+                myVector[i - 1] = myVector[i];
+            }
+            myVector[size - 1] = firstValue;
+        }
 };
 
 
 int main() {
     Vector myVector(5); 
-    myVector.rightRotate();
+    myVector.insert(-1,0);
+    myVector.leftRotate();
     myVector.print();
 }
