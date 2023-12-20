@@ -56,13 +56,16 @@ class Vector {
             myVector[index] = value;
             size++;
         }
+        void rightRotate() {
+            int lastValue = myVector[size - 1];
+            size--;
+            insert(lastValue, 0);
+        }
 };
 
 
 int main() {
-    Vector myVector(5);
-    myVector.pushBack(300);
-    myVector.insert(50,2);
-    cout<<myVector.getCapacity()<<endl;
+    Vector myVector(5); 
+    myVector.rightRotate();
     myVector.print();
 }
