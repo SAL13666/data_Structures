@@ -24,7 +24,7 @@ class Vector {
             myVector = new int[size];
             capacity = size;
             for(int i = 0; i < size; i++) {
-            myVector[i] = 0;
+            myVector[i] = i;
             }
         };
         ~Vector() {
@@ -46,12 +46,23 @@ class Vector {
         int getCapacity() {
             return capacity;
         }
+        void insert(int value, int index) {
+            if(size == capacity) {
+                resizeVector();
+            }
+            for(int i = size - 1; i >= index; i--) {
+                myVector[i + 1] = myVector[i];
+            }
+            myVector[index] = value;
+            size++;
+        }
 };
 
 
 int main() {
     Vector myVector(5);
     myVector.pushBack(300);
+    myVector.insert(50,2);
     cout<<myVector.getCapacity()<<endl;
     myVector.print();
 }
