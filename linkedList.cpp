@@ -17,7 +17,6 @@ class SinglyLinkedList {
         Node *tail = nullptr;
         int length;
     public:
-        
         ~SinglyLinkedList() {
             while (head) //time = o(n) space = o(1)
             {
@@ -45,6 +44,17 @@ class SinglyLinkedList {
                 tail->next = nullptr;
             }
         }
+
+        void insertFront(int value) { // time = o(1) space = o(1)
+            Node *newNode = new Node(value);
+            if(!head) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                newNode->next = head;
+                head = newNode;
+            }
+        }
 };
 
 int main() {
@@ -52,5 +62,6 @@ int main() {
     mySinglyLinkedList.insertBack(10);
     mySinglyLinkedList.insertBack(13);
     mySinglyLinkedList.insertBack(16);
+    mySinglyLinkedList.insertFront(1);
     mySinglyLinkedList.print();
 }
