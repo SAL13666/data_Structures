@@ -5,10 +5,6 @@ struct Node {
     int data;
     Node *next;
     Node(int data): data(data) {};
-    ~Node() {
-        delete next;
-        next = nullptr;
-    }
 };
 
 class SinglyLinkedList {
@@ -28,8 +24,10 @@ class SinglyLinkedList {
         };
         
         void print() { //time = o(n) space = o(1)
-            for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
-                cout<<tempHead->data<<endl;
+        Node *tempHead = head;
+            while(tempHead != nullptr) {
+                cout<<tempHead->data<< endl;
+                tempHead = tempHead->next;
             }
         }
 
@@ -43,6 +41,7 @@ class SinglyLinkedList {
                 tail = newNode;
                 tail->next = nullptr;
             }
+            length++;
         }
 
         void insertFront(int value) { // time = o(1) space = o(1)
@@ -54,6 +53,19 @@ class SinglyLinkedList {
                 newNode->next = head;
                 head = newNode;
             }
+            length++;
+        }
+
+        void deleteFront() { // time = o(1) space = o(1)
+            if(head) {
+                Node *current = head->next;
+                delete head;
+                head = current;
+                if (!head) {
+                    tail = nullptr;
+                }
+                length--;
+            }
         }
 };
 
@@ -62,6 +74,10 @@ int main() {
     mySinglyLinkedList.insertBack(10);
     mySinglyLinkedList.insertBack(13);
     mySinglyLinkedList.insertBack(16);
-    mySinglyLinkedList.insertFront(1);
+    mySinglyLinkedList.deleteFront();
+    mySinglyLinkedList.deleteFront();
+    mySinglyLinkedList.deleteFront();
+    mySinglyLinkedList.deleteFront();
+    mySinglyLinkedList.deleteFront();
     mySinglyLinkedList.print();
 }
