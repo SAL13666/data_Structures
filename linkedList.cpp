@@ -11,18 +11,30 @@ struct Node {
     }
 };
 
-class LinkedList {
+class SinglyLinkedList {
     private:
         Node *head = nullptr;
         Node *tail = nullptr;
         int length;
     public:
-        void print() {
+        
+        ~SinglyLinkedList() {
+            while (head) //time = o(n) space = o(1)
+            {
+                Node *current = head->next;
+                delete head;
+                head = current;
+            }
+            
+        };
+        
+        void print() { //time = o(n) space = o(1)
             for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
                 cout<<tempHead->data<<endl;
             }
         }
-        void insertBack(int value) {
+
+        void insertBack(int value) { // time = o(1) space = o(1)
             Node *newNode = new Node(value);
             if(!head) {
                 head = newNode;
@@ -36,9 +48,9 @@ class LinkedList {
 };
 
 int main() {
-    LinkedList myLinkedList;
-    myLinkedList.insertBack(10);
-    myLinkedList.insertBack(13);
-    myLinkedList.insertBack(16);
-    myLinkedList.print();
+    SinglyLinkedList mySinglyLinkedList;
+    mySinglyLinkedList.insertBack(10);
+    mySinglyLinkedList.insertBack(13);
+    mySinglyLinkedList.insertBack(16);
+    mySinglyLinkedList.print();
 }
