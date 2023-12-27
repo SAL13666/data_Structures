@@ -89,12 +89,53 @@ class SinglyLinkedList {
             }
             return tempHead->data;
         }
+        Node *getHead() {
+            return head;
+        }
+        int getLength() {
+            return length;
+        }
+        bool isSameOne(SinglyLinkedList &listTwo) { // time = o(n) space = o(1)
+            //using length
+            
+            int listTwoLength = listTwo.getLength();
+            Node *listOneHead = head, *listTwoHead = listTwo.getHead();
+            if(listTwoLength != length) {
+                return false;
+            }
+            while(listOneHead && listTwoHead) {
+                if(listOneHead->data != listTwoHead->data) {
+                    return false;
+                }
+                listOneHead = listOneHead->next, listTwoHead = listTwoHead->next;
+            }
+            return true;
+        }
+        bool isSameTwo(SinglyLinkedList &listTwo) { // time = o(n) space = o(1)
+            //Without using length
+            
+            Node *listOneHead = head, *listTwoHead = listTwo.getHead();
+            while(listOneHead && listTwoHead) {
+                if(listOneHead->data != listTwoHead->data) {
+                    return false;
+                }
+                listOneHead = listOneHead->next, listTwoHead = listTwoHead->next;
+            }
+            if(listOneHead != nullptr || listTwoHead != nullptr) {
+                return false;
+            }
+            return true;
+        }
 };
 
 int main() {
     SinglyLinkedList mySinglyLinkedList;
+    SinglyLinkedList mySinglyLinkedListTwo;
     mySinglyLinkedList.insertBack(10);
     mySinglyLinkedList.insertBack(13);
     mySinglyLinkedList.insertBack(16);
-    cout<<mySinglyLinkedList.getNthFromFront(100);
+    mySinglyLinkedListTwo.insertBack(10);
+    mySinglyLinkedListTwo.insertBack(13);
+    mySinglyLinkedListTwo.insertBack(15);
+    cout<<mySinglyLinkedList.isSameTwo(mySinglyLinkedListTwo);
 }
