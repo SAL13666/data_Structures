@@ -67,6 +67,29 @@ class SinglyLinkedList {
                 length--;
             }
         }
+        void deleteUsingKey(int key) { // time = o(n) space = o(1)
+            Node *tempHead = head->next;
+            Node *prevNode = head;
+            if(prevNode->data == key) {
+                delete prevNode;
+                head = tempHead;
+                if (!head) {
+                    tail = nullptr;
+                }
+                return;
+            }
+            while (tempHead)
+            {
+                if(tempHead->data == key) {
+                    prevNode->next = tempHead->next;
+                    delete tempHead;
+                    return;
+                }
+                prevNode = tempHead;
+                tempHead = tempHead->next;
+            }
+            
+        }
         int getNthFromBack(int index) { // time = o(n) space = o(1)
             if(index < 0 || index > length) {
                 return -1;
@@ -130,12 +153,12 @@ class SinglyLinkedList {
 
 int main() {
     SinglyLinkedList mySinglyLinkedList;
-    SinglyLinkedList mySinglyLinkedListTwo;
     mySinglyLinkedList.insertBack(10);
-    mySinglyLinkedList.insertBack(13);
-    mySinglyLinkedList.insertBack(16);
-    mySinglyLinkedListTwo.insertBack(10);
-    mySinglyLinkedListTwo.insertBack(13);
-    mySinglyLinkedListTwo.insertBack(15);
-    cout<<mySinglyLinkedList.isSameTwo(mySinglyLinkedListTwo);
+    mySinglyLinkedList.insertBack(20);
+    mySinglyLinkedList.insertBack(30);
+    mySinglyLinkedList.insertBack(40);
+    mySinglyLinkedList.print();
+    mySinglyLinkedList.deleteUsingKey(20);
+    mySinglyLinkedList.print();
+
 }
