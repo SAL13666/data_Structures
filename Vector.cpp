@@ -1,72 +1,125 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-
+template <class T>
 class Vector {
     private:
-        int *myVector = nullptr;
-        int size = 1;
+        T *data = nullptr;
+        int size = 0;
         int capacity = 1;
+
         void resizeVector() {
             capacity = ceil(size * 2);
-            int *newVector = nullptr;
-            newVector = new int[capacity];
+            T *newVector = new T[capacity] {0};
             for(int i = 0; i < size; i++) {
-                newVector[i] = myVector[i];
+                newVector[i] = data[i];
             }
-            swap(myVector, newVector);
+            swap(newVector, data);
             delete[] newVector;
-            newVector = nullptr;
         }
+
     public:
-        Vector(int size_ = 0) {
-            size = size_;
-            myVector = new int[size];
-            capacity = size;
+        Vector() : Vector(1) {}
+
+        Vector(int _size) : size(_size), data(new T[size]) {
             for(int i = 0; i < size; i++) {
-            myVector[i] = i;
+                data[i] = 0;
             }
         };
+
         ~Vector() {
-            delete[] myVector;
-            myVector = nullptr;
-        };
-        void print() {
+            delete[] data;
+            data = nullptr;
+        }
+
+        void printVector() {
             for(int i = 0; i < size; i++) {
-                cout<< myVector[i]<<endl;
+                cout << data[i] << " ";
             }
+            cout<<"\n";
         }
-        void pushBack(int value) {
-            if(size == capacity) {
+
+        int getValueUsingIndex(int index) {
+            if(index >= size || index < 0) {
+                return -1;
+            }
+            return data[index];
+        }
+
+        int setValueUsingIndex(int index, T value) {
+            if(index >= size || index < 0) {
+                return -1;
+            }
+
+            data[index] = value;
+            return 1;
+        }
+
+        int find(T value) {
+            for(int i = 0; i < size; i++) {
+                if(value == data[i])
+                    return i;
+            }
+            return -1;
+        }
+
+        void pushBack(T value) {
+            if(size >= capacity) {
                 resizeVector();
             }
-            myVector[size] = value;
+
+            data[size] = value;
             size++;
         }
-        int getCapacity() {
-            return capacity;
-        }
-        void insert(int value, int index) {
-            if(size == capacity) {
+
+        int insertValue(int index, T value) {
+            if(index < 0 || index > size) {
+                return -1;
+            }
+
+            if(size >= capacity) {
                 resizeVector();
             }
+
             for(int i = size - 1; i >= index; i--) {
-                myVector[i + 1] = myVector[i];
+                data[i + 1] = data[i];
             }
-            myVector[index] = value;
+
+            data[index] = value;
             size++;
+            return 1;
         }
-        void rightRotate() {
-            int lastValue = myVector[size - 1];
+
+        void rotateRight() {
+            int value = data[size - 1];
+            insertValue(0, value);
             size--;
-            insert(lastValue, 0);
         }
-        void leftRotate() {
-            int firstValue = myVector[0]; 
-            for(int i = 1; i < size; i++) { // 0 1 2 3 4
-                myVector[i - 1] = myVector[i];
+
+        void rotateLeft() {
+            int value = data[0];
+            for(int i = 0; i < size - 1; i++) {
+                data[i] = data[i + 1];
             }
-            myVector[size - 1] = firstValue;
+            data[size - 1] = value;
+        }
+
+        void rotateRightWithSteps(int steps) {
+            steps %= size;
+            for(int i = 0; i < steps; i++) {
+                rotateRight();
+            }
+        }
+
+        T deleteUsingPosition(int index) {
+            T value = data[index];
+
+            for(int i = index + 1; i < size; i++) {
+                data[i - 1] = data[i];
+            }
+
+            size--; 
+            return value; 
         }
 };
 
