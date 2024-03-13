@@ -8,7 +8,7 @@ class Vector {
         int size = 0;
         int capacity = 1;
 
-        void resizeVector() {
+        void resizeVector() { //O(n) time O(capacity) space
             capacity = ceil(size * 2);
             T *newVector = new T[capacity] {0};
             for(int i = 0; i < size; i++) {
@@ -21,7 +21,7 @@ class Vector {
     public:
         Vector() : Vector(1) {}
 
-        Vector(int _size) : size(_size), data(new T[size]) {
+        Vector(int _size) : size(_size), data(new T[size]) { //O(n) time O(n) space
             for(int i = 0; i < size; i++) {
                 data[i] = 0;
             }
@@ -32,21 +32,21 @@ class Vector {
             data = nullptr;
         }
 
-        void printVector() {
+        void printVector() { //O(n) time O(1) space
             for(int i = 0; i < size; i++) {
                 cout << data[i] << " ";
             }
             cout<<"\n";
         }
 
-        int getValueUsingIndex(int index) {
+        int getValueUsingIndex(int index) { //O(1) time O(1) space
             if(index >= size || index < 0) {
                 return -1;
             }
             return data[index];
         }
 
-        int setValueUsingIndex(int index, T value) {
+        int setValueUsingIndex(int index, T value) { //O(1) time O(1) space
             if(index >= size || index < 0) {
                 return -1;
             }
@@ -56,14 +56,14 @@ class Vector {
         }
 
         int find(T value) {
-            for(int i = 0; i < size; i++) {
+            for(int i = 0; i < size; i++) { //O(n) time O(1) space
                 if(value == data[i])
                     return i;
             }
             return -1;
         }
 
-        void pushBack(T value) {
+        void pushBack(T value) { //O(n) time O(capacity) space
             if(size >= capacity) {
                 resizeVector();
             }
@@ -72,7 +72,7 @@ class Vector {
             size++;
         }
 
-        int insertValue(int index, T value) {
+        int insertValue(int index, T value) { //O(n) time O(capacity) space
             if(index < 0 || index > size) {
                 return -1;
             }
@@ -90,13 +90,13 @@ class Vector {
             return 1;
         }
 
-        void rotateRight() {
+        void rotateRight() { //O(n) time O(capacity) space
             int value = data[size - 1];
             insertValue(0, value);
             size--;
         }
 
-        void rotateLeft() {
+        void rotateLeft() { //O(n) time O(1) space
             int value = data[0];
             for(int i = 0; i < size - 1; i++) {
                 data[i] = data[i + 1];
@@ -104,14 +104,14 @@ class Vector {
             data[size - 1] = value;
         }
 
-        void rotateRightWithSteps(int steps) {
+        void rotateRightWithSteps(int steps) { //O(n) time O(n) space
             steps %= size;
             for(int i = 0; i < steps; i++) {
                 rotateRight();
             }
         }
 
-        T deleteUsingPosition(int index) {
+        T deleteUsingPosition(int index) { //O(n) time O(1) space
             T value = data[index];
 
             for(int i = index + 1; i < size; i++) {
@@ -125,8 +125,5 @@ class Vector {
 
 
 int main() {
-    Vector myVector(5); 
-    myVector.insert(-1,0);
-    myVector.leftRotate();
-    myVector.print();
+    Vector<int> myVector(5); 
 }
