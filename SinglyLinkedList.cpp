@@ -211,7 +211,17 @@ class SinglyLinkedList {
                 prev = tempHead;
                 tempHead = tempHead->next;
             }
+        }
 
+        void swapPairs() { //O(n) time O(1) space
+            Node *tempHead = head;
+            while(tempHead) {
+                if(!tempHead->next) {
+                    return;
+                }
+                swap(tempHead->data, tempHead->next->data);
+                tempHead = tempHead->next->next;
+            }
         }
 };
 
@@ -220,10 +230,13 @@ int main(void) {
     myLinkedList.insertEnd(10);
     myLinkedList.insertEnd(20);
     myLinkedList.insertEnd(30);
+    myLinkedList.insertEnd(40);
+    myLinkedList.insertEnd(50);
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
-    myLinkedList.deleteUsingKey(10);
-    myLinkedList.deleteUsingKey(50);
+    // myLinkedList.deleteUsingKey(10);
+    // myLinkedList.deleteUsingKey(50);
+    myLinkedList.swapPairs();
     myLinkedList.print();
     return 0;
 }
