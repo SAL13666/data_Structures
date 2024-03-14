@@ -266,7 +266,7 @@ class SinglyLinkedList {
             }
         }
 
-        void insert(int value) { // -1 0 1 2 2 3 4 5
+        void insert(int value) { //O(n) time O(1) space
             Node* tempHead = head;
             Node* prev {};
             Node *newNode = new Node(value);
