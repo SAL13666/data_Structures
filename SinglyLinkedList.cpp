@@ -223,6 +223,27 @@ class SinglyLinkedList {
                 tempHead = tempHead->next->next;
             }
         }
+
+        void reverseListNodes() { //O(n) time O(1) space
+            Node *tempHead = head;
+            Node *newHead {};
+            Node *next = tempHead->next;
+
+            while(tempHead) {
+                if(!newHead) {
+                    newHead = tempHead;
+                    newHead->next = nullptr;
+                    tail = newHead;
+                    tempHead = next;
+                    continue;
+                }
+                next = tempHead->next;
+                tempHead->next = newHead;
+                newHead = tempHead;
+                tempHead = next;
+            }
+            head = newHead;
+        }
 };
 
 int main(void) {
@@ -236,7 +257,8 @@ int main(void) {
     cout<<endl<< "----------------------------------------------------"<<endl;
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
-    myLinkedList.swapPairs();
+    // myLinkedList.swapPairs();
+    myLinkedList.reverseListNodes();
     myLinkedList.print();
     return 0;
 }
