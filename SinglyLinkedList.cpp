@@ -266,21 +266,61 @@ class SinglyLinkedList {
             }
         }
 
+        void insert(int value) { // -1 0 1 2 2 3 4 5
+            Node* tempHead = head;
+            Node* prev {};
+            Node *newNode = new Node(value);
+
+            if(!head) {
+                insertFront(value);
+                return;
+            }
+
+            while(tempHead != nullptr) {
+                if(tempHead->data > value) {
+                    newNode->next = tempHead;
+                    if(!prev) {
+                        head = newNode;
+                        return;
+                    }
+
+                    prev->next = newNode;
+                    return;
+                }
+
+                prev = tempHead;
+                tempHead = tempHead->next;
+                if(tempHead == nullptr) {
+                    newNode->next = tempHead;
+                    prev->next = newNode;
+                    tail = newNode;
+                }
+            }
+        }
+
 };
 
 int main(void) {
     SinglyLinkedList myLinkedList;
-    myLinkedList.insertEnd(10);
-    myLinkedList.insertEnd(20);
-    myLinkedList.insertEnd(30);
-    myLinkedList.insertEnd(40);
-    myLinkedList.insertEnd(50);
-    myLinkedList.print();
+    // myLinkedList.insertEnd(10);
+    // myLinkedList.insertEnd(20);
+    // myLinkedList.insertEnd(30);
+    // myLinkedList.insertEnd(40);
+    // myLinkedList.insertEnd(50);
+    // myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
-    myLinkedList.deleteEvenPositions();
+    myLinkedList.insert(9);
+    myLinkedList.insert(50);
+    myLinkedList.insert(0);
+    myLinkedList.insert(-1);
+    myLinkedList.insert(100);
+    myLinkedList.insert(530);
+    myLinkedList.insert(10);
+    myLinkedList.insert(90);
+    myLinkedList.insert(9999);
     myLinkedList.print();
     return 0;
 }
