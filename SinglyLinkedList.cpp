@@ -244,6 +244,28 @@ class SinglyLinkedList {
             }
             head = newHead;
         }
+
+        void deleteEvenPositions() { //O(n) time O(1) space
+            if (!head || head == tail) {
+                return;
+            }
+            Node* prev = head;
+            Node* tempHead = head->next;
+            Node* next = nullptr;
+
+            while (tempHead) {
+                next = tempHead->next;
+                delete tempHead;
+                prev->next = next;
+                if (!next) {
+                    tail = prev;
+                    return;
+                }
+                tempHead = next->next;
+                prev = next;
+            }
+        }
+
 };
 
 int main(void) {
@@ -258,7 +280,7 @@ int main(void) {
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
-    myLinkedList.reverseListNodes();
+    myLinkedList.deleteEvenPositions();
     myLinkedList.print();
     return 0;
 }
