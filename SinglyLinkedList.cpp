@@ -318,6 +318,26 @@ class SinglyLinkedList {
             tail = tempNode;
         }
 
+        void leftRotate() { //O(n) time O(1) space
+            if (!head || head == tail) {
+                return;
+            }
+
+            Node* tempNode = head;
+            Node* prev = nullptr;
+            while (tempNode->next != nullptr) {
+                prev = tempNode;
+                tempNode = tempNode->next;
+            }
+
+            tempNode->next = head;
+            head = tempNode;
+            prev->next = nullptr;
+            tail = prev;
+        }
+
+
+
 
 };
 
@@ -342,7 +362,8 @@ int main(void) {
     myLinkedList.insert(9999);
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
-    myLinkedList.swapHeadAndTail();
+    myLinkedList.leftRotate();
+    myLinkedList.removeDuplicates();
     myLinkedList.print();
     return 0;
 }
