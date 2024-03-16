@@ -298,6 +298,27 @@ class SinglyLinkedList {
             }
         }
 
+        void swapHeadAndTail() { //O(n) time O(1) space
+            if (!head || head == tail) {
+                return;
+            }
+
+            Node* tempNode = head;
+            Node* prev = nullptr;
+            Node* current = head;
+            while (current->next != nullptr) {
+                prev = current;
+                current = current->next;
+            }
+
+            prev->next = head;
+            current->next = head->next;
+            head->next = nullptr;
+            head = current;
+            tail = tempNode;
+        }
+
+
 };
 
 int main(void) {
@@ -307,20 +328,21 @@ int main(void) {
     // myLinkedList.insertEnd(30);
     // myLinkedList.insertEnd(40);
     // myLinkedList.insertEnd(50);
-    // myLinkedList.print();
-    cout<<endl<< "----------------------------------------------------"<<endl;
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
     myLinkedList.insert(9);
     myLinkedList.insert(50);
-    myLinkedList.insert(0);
-    myLinkedList.insert(-1);
-    myLinkedList.insert(100);
-    myLinkedList.insert(530);
-    myLinkedList.insert(10);
+    // myLinkedList.insert(0);
+    // myLinkedList.insert(-1);
+    // myLinkedList.insert(100);
+    // myLinkedList.insert(530);
+    // myLinkedList.insert(10);
     myLinkedList.insert(90);
     myLinkedList.insert(9999);
+    myLinkedList.print();
+    cout<<endl<< "----------------------------------------------------"<<endl;
+    myLinkedList.swapHeadAndTail();
     myLinkedList.print();
     return 0;
 }
