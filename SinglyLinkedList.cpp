@@ -336,7 +336,28 @@ class SinglyLinkedList {
             tail = prev;
         }
 
+        void removeDuplicates() { //O(n^2) time O(n) space
+            if (!head || head == tail) {
+                return;
+            }
 
+            for(Node* tempNode = head; tempNode != nullptr; tempNode = tempNode->next) { // 0 1 2 2 3 4 4 5
+                for(Node* tempNode2 = tempNode->next, *prev = tempNode ; tempNode2 != nullptr; tempNode2 = tempNode2->next) {
+                    if(tempNode->data == tempNode2->data) {
+                        prev->next = tempNode2->next;
+
+                        if (tempNode2 == tail) {
+                            tail = prev;
+                        }
+
+                        delete tempNode2;
+                        tempNode2 = prev;
+                    } else {
+                        prev = tempNode2;
+                    }
+                }
+            }
+        }
 
 
 };
@@ -353,16 +374,22 @@ int main(void) {
     // myLinkedList.swapPairs();
     myLinkedList.insert(9);
     myLinkedList.insert(50);
+    myLinkedList.insert(50);
+    myLinkedList.insert(1);
+    myLinkedList.insert(1);
+    myLinkedList.insert(1);
     // myLinkedList.insert(0);
     // myLinkedList.insert(-1);
     // myLinkedList.insert(100);
     // myLinkedList.insert(530);
     // myLinkedList.insert(10);
     myLinkedList.insert(90);
+    myLinkedList.insert(90);
+    myLinkedList.insert(9999);
     myLinkedList.insert(9999);
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
-    myLinkedList.leftRotate();
+    // myLinkedList.leftRotate();
     myLinkedList.removeDuplicates();
     myLinkedList.print();
     return 0;
