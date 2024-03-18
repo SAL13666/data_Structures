@@ -390,6 +390,35 @@ class SinglyLinkedList {
             }
         }
 
+        void moveToBack(int key) { //O(n) time O(1) space
+            int length = 0;
+            for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
+                length++;
+            }
+
+            for(Node *tempHead = head, *prev = nullptr; length; length--) {
+                if(tempHead->data == key) {
+                    if(prev) {
+                        prev->next = tempHead->next;
+                        tail->next = tempHead;
+                        tempHead->next = nullptr;
+                        tail = tempHead;
+                        tempHead = prev;
+                    } else {
+                        head = head->next;
+                        tail->next = tempHead;
+                        tail = tempHead;
+                        tail->next = nullptr;
+                        tempHead = head;
+                        prev = nullptr;
+                        continue;
+                    }
+                }
+                prev = tempHead , tempHead = tempHead->next;
+            }
+
+        }
+
 
 };
 
@@ -404,12 +433,33 @@ int main(void) {
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
     myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
+    // myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(3);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(4);
+    myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(5);
+    myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(6);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(5);
+    myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(7);
     // myLinkedList.insert(0);
     // myLinkedList.insert(-1);
@@ -419,9 +469,12 @@ int main(void) {
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
     // myLinkedList.leftRotate();
-    myLinkedList.removeLastOccurance(1);
-    myLinkedList.removeLastOccurance(7);
-    myLinkedList.removeLastOccurance(5);
+    // myLinkedList.removeLastOccurance(1);
+    // myLinkedList.removeLastOccurance(7);
+    // myLinkedList.removeLastOccurance(5);
+    myLinkedList.moveToBack(1);
+    myLinkedList.moveToBack(2);
+    myLinkedList.moveToBack(5);
     myLinkedList.print();
     return 0;
 }
