@@ -336,12 +336,12 @@ class SinglyLinkedList {
             tail = prev;
         }
 
-        void removeDuplicates() { //O(n^2) time O(n) space
+        void removeDuplicates() { //O(n^2) time O(1) space
             if (!head || head == tail) {
                 return;
             }
 
-            for(Node* tempNode = head; tempNode != nullptr; tempNode = tempNode->next) { // 0 1 2 2 3 4 4 5
+            for(Node* tempNode = head; tempNode != nullptr; tempNode = tempNode->next) {
                 for(Node* tempNode2 = tempNode->next, *prev = tempNode ; tempNode2 != nullptr; tempNode2 = tempNode2->next) {
                     if(tempNode->data == tempNode2->data) {
                         prev->next = tempNode2->next;
@@ -359,6 +359,37 @@ class SinglyLinkedList {
             }
         }
 
+        void removeLastOccurance(int value) {  //O(n) time O(1) space
+            if (!head) {
+                return;
+            }
+
+            Node *deleteNext = nullptr;
+            bool isFound = false;
+
+            for(Node *tempHead = head, *prev = nullptr; tempHead; prev = tempHead , tempHead = tempHead->next) {
+                if(tempHead->data == value) {
+                    deleteNext = prev;
+                    isFound = true;
+                }
+            }
+
+            if(isFound) {
+                if(deleteNext) {
+                    Node *next = deleteNext->next->next;
+                    if(tail == deleteNext->next) {
+                        tail = deleteNext;
+                    }
+                    delete deleteNext->next;
+                    deleteNext->next = next;
+                } else {
+                    Node *newHead = head->next;
+                    delete head;
+                    head = newHead;
+                }
+            }
+        }
+
 
 };
 
@@ -372,25 +403,25 @@ int main(void) {
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
-    myLinkedList.insert(9);
-    myLinkedList.insert(50);
-    myLinkedList.insert(50);
-    myLinkedList.insert(1);
-    myLinkedList.insert(1);
-    myLinkedList.insert(1);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(3);
+    myLinkedList.insertEnd(4);
+    myLinkedList.insertEnd(5);
+    myLinkedList.insertEnd(6);
+    myLinkedList.insertEnd(5);
+    myLinkedList.insertEnd(7);
     // myLinkedList.insert(0);
     // myLinkedList.insert(-1);
     // myLinkedList.insert(100);
     // myLinkedList.insert(530);
     // myLinkedList.insert(10);
-    myLinkedList.insert(90);
-    myLinkedList.insert(90);
-    myLinkedList.insert(9999);
-    myLinkedList.insert(9999);
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
     // myLinkedList.leftRotate();
-    myLinkedList.removeDuplicates();
+    myLinkedList.removeLastOccurance(1);
+    myLinkedList.removeLastOccurance(7);
+    myLinkedList.removeLastOccurance(5);
     myLinkedList.print();
     return 0;
 }
