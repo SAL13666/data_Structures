@@ -11,6 +11,7 @@ class SinglyLinkedList {
     private:
         Node *head {};
         Node *tail {};
+        Node *firstNode = head;
     public:
         SinglyLinkedList() : head(nullptr), tail(nullptr) {};
         ~SinglyLinkedList() { //O(n) time O(1) space
@@ -52,7 +53,7 @@ class SinglyLinkedList {
         Node* getNthFromBack(int nth) {//O(n) time O(1) space
             Node *tempHead = head;
             int nodesCount = 0;
-            for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
+            for(tempHead = head; tempHead; tempHead = tempHead->next) {
                 nodesCount++;
             }
             tempHead = head;
@@ -419,6 +420,26 @@ class SinglyLinkedList {
 
         }
 
+        void arrangeEvenAndOddPositions() { // 1 2 3
+            if(!head || head == tail) {
+                return;
+            }
+
+            int index = 1;
+            Node *oldTail = tail;
+            for(Node *tempHead = head, *prev = nullptr; tempHead; prev = tempHead, tempHead = tempHead->next, index++) {
+                if(*&tempHead == *&oldTail) { // NOTE(1) there are a difference between *& and & only be careful while using pointers
+                    return;
+                }
+                if(index % 2 == 0) {
+                    prev->next = tempHead->next;
+                    tempHead->next = nullptr;
+                    tail->next = tempHead;
+                    tail = tempHead;
+                    tempHead = prev;
+                }
+            }
+        }
 
 };
 
@@ -432,35 +453,13 @@ int main(void) {
     // myLinkedList.deleteUsingKey(10);
     // myLinkedList.deleteUsingKey(50);
     // myLinkedList.swapPairs();
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    // myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(3);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(11);
+    myLinkedList.insertEnd(33);
+    myLinkedList.insertEnd(55);
     myLinkedList.insertEnd(4);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(5);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(6);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(5);
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(7);
+    myLinkedList.insertEnd(50);
+    myLinkedList.insertEnd(17);
+    myLinkedList.insertEnd(8);
     // myLinkedList.insert(0);
     // myLinkedList.insert(-1);
     // myLinkedList.insert(100);
@@ -472,9 +471,7 @@ int main(void) {
     // myLinkedList.removeLastOccurance(1);
     // myLinkedList.removeLastOccurance(7);
     // myLinkedList.removeLastOccurance(5);
-    myLinkedList.moveToBack(1);
-    myLinkedList.moveToBack(2);
-    myLinkedList.moveToBack(5);
+    myLinkedList.arrangeEvenAndOddPositions();
     myLinkedList.print();
     return 0;
 }

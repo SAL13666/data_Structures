@@ -1,0 +1,3 @@
+1: there are a difference between *& and & only be careful while using pointers derefrencing (pointer1->pointer2->data) 
+    &: returns the address of the pointer variable that holds the value of another pointer: (pointer1)
+    *&: returns the value of the required inner pointer it derefrence the first pointer and then gets the address of it: (pointer2)  
