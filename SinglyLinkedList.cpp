@@ -466,21 +466,49 @@ class SinglyLinkedList {
         }
     }
 
+    void addNum(SinglyLinkedList &secondLinkedList) { //O(n) time O(d) space
+        double totalNumber = 0;
+        int index = 0;
+        Node *secondHead = secondLinkedList.head;
+
+        for(Node *tempHead = head; tempHead; index++) {
+            totalNumber+= tempHead->data * pow(10, index);
+            head = tempHead->next;
+            delete tempHead;
+            tempHead = head;
+        }
+
+        index = 0;
+
+        for(Node *tempHead = secondHead; tempHead; tempHead = tempHead->next, index++) {
+            totalNumber+= tempHead->data * pow(10, index);
+        }
+        int digits = (int)totalNumber;
+        while(digits) {
+            this->insertEnd(digits % 10);
+            digits /= 10;
+        }
+    }
+
 };
 
 int main(void) {
     SinglyLinkedList myLinkedList;
     SinglyLinkedList myLinkedList2;
-    myLinkedList.insertEnd(1);
-    myLinkedList.insertEnd(2);
-    myLinkedList.insertEnd(3);
+    myLinkedList.insertEnd(9);
+    myLinkedList.insertEnd(6);
+    myLinkedList.insertEnd(5);
+    myLinkedList2.insertEnd(8);
+    myLinkedList2.insertEnd(7);
+    myLinkedList2.insertEnd(6);
     myLinkedList2.insertEnd(4);
     myLinkedList2.insertEnd(5);
-    myLinkedList2.insertEnd(6);
     myLinkedList2.insertEnd(7);
+    myLinkedList2.insertEnd(8);
+    myLinkedList2.insertEnd(9);
     myLinkedList.print();
     cout<<endl<< "----------------------------------------------------"<<endl;
-    myLinkedList.insertAlternate(myLinkedList2);
+    myLinkedList.addNum(myLinkedList2);
     myLinkedList.print();
     return 0;
 }
