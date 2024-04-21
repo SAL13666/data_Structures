@@ -72,6 +72,33 @@ class DoublyLinkedList {
                 }
             }
         }
+
+    void deleteFront() { //O(1) time O(1) space
+        if(!head) {
+            return;
+        }
+        if(head->next == nullptr) {
+            head = tail = nullptr;
+        }
+        Node *newHead = head->next;
+        delete head;
+        newHead->prev = nullptr;
+        head = newHead;
+    }
+
+    void deleteEnd() { //O(1) time O(1) space
+        if(!head) {
+            return;
+        }
+        if(head->next == nullptr) {
+            delete head;
+            head = tail = nullptr;
+        }
+        Node *newTail = tail->prev;
+        delete tail;
+        newTail->next = nullptr;
+        tail = newTail;
+    }
 };
 
 
@@ -85,6 +112,8 @@ int main(void) {
     myLinkedList.insertSorted(95);
     myLinkedList.insertSorted(-10);
     myLinkedList.insertFront(0);
+    myLinkedList.deleteFront();
+    myLinkedList.deleteFront();
     myLinkedList.print();
 
 }
