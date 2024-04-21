@@ -43,6 +43,17 @@ class DoublyLinkedList {
                 tail = newNode;
             }
         }
+
+        void insertFront(int value) { //O(1) time O(1) space
+            Node * newNode = new Node(value);
+            newNode->next = head;
+            if(!head) {
+                head = tail = newNode;
+            } else {
+                head->prev = newNode;
+                head = newNode;
+            }
+        }
 };
 
 
@@ -52,6 +63,7 @@ int main(void) {
     myLinkedList.insertEnd(20);
     myLinkedList.insertEnd(30);
     myLinkedList.insertEnd(40);
+    myLinkedList.insertFront(0);
     myLinkedList.print();
 
 }
