@@ -182,10 +182,20 @@ class DoublyLinkedList {
             }
         }
 
-        void deleteOddPositions() {
+        void deleteOddPositions() { //O(n) time O(1) space
             insertFront(0);
             deleteEvenPositions();
             deleteFront();
+        }
+
+        bool isPalindrome() {
+            for(Node *tempHead = head, *tempTail = tail; tempHead != tempTail; tempHead = tempHead->next, tempTail = tempTail->prev) {
+                if(tempHead->data != tempTail->data) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 };
 
@@ -207,4 +217,5 @@ int main(void) {
 
     myLinkedList.print();
 
+    cout<<endl<<myLinkedList.isPalindrome()<<endl;
 }
