@@ -73,92 +73,114 @@ class DoublyLinkedList {
             }
         }
 
-    void deleteFront() { //O(1) time O(1) space
-        if(!head) {
-            return;
-        }
-        if(head->next == nullptr) {
+        void deleteFront() { //O(1) time O(1) space
+            if(!head) {
+                return;
+            }
+            if(head->next == nullptr) {
+                delete head;
+                head = tail = nullptr;
+                return;
+            }
+            Node *newHead = head->next;
             delete head;
-            head = tail = nullptr;
-            return;
+            newHead->prev = nullptr;
+            head = newHead;
         }
-        Node *newHead = head->next;
-        delete head;
-        newHead->prev = nullptr;
-        head = newHead;
-    }
 
-    void deleteEnd() { //O(1) time O(1) space
-        if(!head) {
-            return;
+        void deleteEnd() { //O(1) time O(1) space
+            if(!head) {
+                return;
+            }
+            if(head->next == nullptr) {
+                delete head;
+                head = tail = nullptr;
+                return;
+            }
+            Node *newTail = tail->prev;
+            delete tail;
+            newTail->next = nullptr;
+            tail = newTail;
         }
-        if(head->next == nullptr) {
-            delete head;
-            head = tail = nullptr;
-            return;
-        }
-        Node *newTail = tail->prev;
-        delete tail;
-        newTail->next = nullptr;
-        tail = newTail;
-    }
 
-    Node* deleteAndLink(Node *node) { //O(1) time O(1) space
-        Node* current = node->prev;
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-        delete node;
-        return current;
-    }
-
-    void deleteNodeWithKey(int value) { //O(n) time O(1) space
-        if(!head) {
-            return;
+        Node* deleteAndLink(Node *node) { //O(1) time O(1) space
+            Node* current = node->prev;
+            node->prev->next = node->next;
+            node->next->prev = node->prev;
+            delete node;
+            return current;
         }
-        if(head->data == value) {
-            deleteFront();
-        } else if (tail->data == value) {
-            deleteEnd();
-        } else {
-            for(Node * tempHead = head->next; tempHead != nullptr; tempHead = tempHead->next) {
-                if(value == tempHead->data) {
-                    tempHead = deleteAndLink(tempHead);
+
+        void deleteNodeWithKey(int value) { //O(n) time O(1) space
+            if(!head) {
+                return;
+            }
+            if(head->data == value) {
+                deleteFront();
+            } else if (tail->data == value) {
+                deleteEnd();
+            } else {
+                for(Node * tempHead = head->next; tempHead != nullptr; tempHead = tempHead->next) {
+                    if(value == tempHead->data) {
+                        tempHead = deleteAndLink(tempHead);
+                    }
                 }
             }
         }
-    }
 
-    void deleteAllNodesWithKey(int value) { //O(n) time O(1) space
-        if(!head) {
-            return;
+        void deleteAllNodesWithKey(int value) { //O(n) time O(1) space
+            if(!head) {
+                return;
+            }
+
+            for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
+                if(tempHead->data == value) {
+                    if(!head->next) {
+                        delete head;
+                        head = tail = nullptr;
+                        return;
+                    }
+
+                    if(tempHead->prev) {
+                        if(!tempHead->next) {
+                            tempHead->prev->next = nullptr;
+                            tail = tempHead->prev;
+                            delete tempHead;
+                            tempHead = tail;
+                        } else {
+                            tempHead = deleteAndLink(tempHead);
+                        }
+                    } else {
+                        Node *next = tempHead->next;
+                        delete tempHead;
+                        next->prev = nullptr;
+                        tempHead = head = next;
+                    }
+                }
+            }
         }
 
-        for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
-            if(tempHead->data == value) {
-                if(!head->next) {
-                    delete head;
-                    head = tail = nullptr;
-                    return;
-                }
+        void deleteEvenPostions() { //O(n) time O(1) space
+            if(!head || !head->next) {
+                return;
+            }
 
-                if(tempHead->prev) {
+            int counter = 1;
+
+            for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
+                if(counter % 2 == 0) {
                     if(!tempHead->next) {
                         tempHead->prev->next = nullptr;
                         tail = tempHead->prev;
                         delete tempHead;
                         tempHead = tail;
-                    } else {
-                        tempHead = deleteAndLink(tempHead);
+                        return;
                     }
-                } else {
-                    Node *next = tempHead->next;
-                    delete tempHead;
-                    next->prev = nullptr;
-                    tempHead = head = next;
+                    tempHead = deleteAndLink(tempHead);
                 }
+                counter++;
             }
         }
-    }
 };
 
 
@@ -166,11 +188,16 @@ int main(void) {
     DoublyLinkedList myLinkedList;
     myLinkedList.insertFront(0);
     myLinkedList.deleteNodeWithKey(0);
+    myLinkedList.deleteAllNodesWithKey(1);
     myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(3);
-    myLinkedList.deleteAllNodesWithKey(1);
     myLinkedList.insertEnd(5);
+    myLinkedList.insertEnd(6);
+    myLinkedList.insertEnd(7);
+    myLinkedList.deleteEvenPostions();
+    myLinkedList.insertEnd(8);
+
     myLinkedList.print();
 
 }
