@@ -188,7 +188,7 @@ class DoublyLinkedList {
             deleteFront();
         }
 
-        bool isPalindrome() {
+        bool isPalindrome() { //O(n) time O(1) space
             for(Node *tempHead = head, *tempTail = tail; tempHead != tempTail; tempHead = tempHead->next, tempTail = tempTail->prev) {
                 if(tempHead->data != tempTail->data) {
                     return false;
@@ -197,25 +197,38 @@ class DoublyLinkedList {
 
             return true;
         }
+
+        int findMiddle() { //O(n) time O(1) space
+            Node *tempHead = head, *tempTail = tail;
+            while(tempHead != tempTail && tempHead->next != tempTail) {
+                tempHead = tempHead->next;
+                tempTail = tempTail->prev;
+            }
+            return tempTail->data;
+        }
+
+        int findMiddleWithoutUsingPrev() { //O(n) time O(1) space
+            Node *slowHead = head, *fastHead = head;
+            while(fastHead && fastHead->next) {
+                slowHead = slowHead->next;
+                fastHead = fastHead->next->next;
+            }
+            return slowHead->data;
+        }
 };
 
 
 int main(void) {
     DoublyLinkedList myLinkedList;
     myLinkedList.insertFront(0);
-    myLinkedList.deleteNodeWithKey(0);
-    myLinkedList.deleteAllNodesWithKey(1);
     myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(3);
     myLinkedList.insertEnd(4);
     myLinkedList.insertEnd(5);
     myLinkedList.insertEnd(6);
-    myLinkedList.insertEnd(7);
-    myLinkedList.deleteOddPositions();
-    myLinkedList.insertEnd(8);
 
     myLinkedList.print();
 
-    cout<<endl<<myLinkedList.isPalindrome()<<endl;
+    cout<<endl<<myLinkedList.findMiddleWithoutUsingPrev()<<endl;
 }
