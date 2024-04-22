@@ -160,7 +160,7 @@ class DoublyLinkedList {
             }
         }
 
-        void deleteEvenPostions() { //O(n) time O(1) space
+        void deleteEvenPositions() { //O(n) time O(1) space
             if(!head || !head->next) {
                 return;
             }
@@ -181,6 +181,12 @@ class DoublyLinkedList {
                 counter++;
             }
         }
+
+        void deleteOddPositions() {
+            insertFront(0);
+            deleteEvenPositions();
+            deleteFront();
+        }
 };
 
 
@@ -192,10 +198,11 @@ int main(void) {
     myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(3);
+    myLinkedList.insertEnd(4);
     myLinkedList.insertEnd(5);
     myLinkedList.insertEnd(6);
     myLinkedList.insertEnd(7);
-    myLinkedList.deleteEvenPostions();
+    myLinkedList.deleteOddPositions();
     myLinkedList.insertEnd(8);
 
     myLinkedList.print();
