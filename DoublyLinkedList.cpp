@@ -111,7 +111,7 @@ class DoublyLinkedList {
         return current;
     }
 
-    void deleteNodeWithKey(int value) { //O(n) time O(1) space  // has bug
+    void deleteNodeWithKey(int value) { //O(n) time O(1) space
         if(!head) {
             return;
         }
@@ -127,6 +127,38 @@ class DoublyLinkedList {
             }
         }
     }
+
+    void deleteAllNodesWithKey(int value) { //O(n) time O(1) space
+        if(!head) {
+            return;
+        }
+
+        for(Node *tempHead = head; tempHead; tempHead = tempHead->next) {
+            if(tempHead->data == value) {
+                if(!head->next) {
+                    delete head;
+                    head = tail = nullptr;
+                    return;
+                }
+
+                if(tempHead->prev) {
+                    if(!tempHead->next) {
+                        tempHead->prev->next = nullptr;
+                        tail = tempHead->prev;
+                        delete tempHead;
+                        tempHead = tail;
+                    } else {
+                        tempHead = deleteAndLink(tempHead);
+                    }
+                } else {
+                    Node *next = tempHead->next;
+                    delete tempHead;
+                    next->prev = nullptr;
+                    tempHead = head = next;
+                }
+            }
+        }
+    }
 };
 
 
@@ -137,6 +169,8 @@ int main(void) {
     myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(3);
+    myLinkedList.deleteAllNodesWithKey(1);
+    myLinkedList.insertEnd(5);
     myLinkedList.print();
 
 }
