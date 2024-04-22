@@ -78,7 +78,9 @@ class DoublyLinkedList {
             return;
         }
         if(head->next == nullptr) {
+            delete head;
             head = tail = nullptr;
+            return;
         }
         Node *newHead = head->next;
         delete head;
@@ -93,27 +95,48 @@ class DoublyLinkedList {
         if(head->next == nullptr) {
             delete head;
             head = tail = nullptr;
+            return;
         }
         Node *newTail = tail->prev;
         delete tail;
         newTail->next = nullptr;
         tail = newTail;
     }
+
+    Node* deleteAndLink(Node *node) { //O(1) time O(1) space
+        Node* current = node->prev;
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+        delete node;
+        return current;
+    }
+
+    void deleteNodeWithKey(int value) { //O(n) time O(1) space  // has bug
+        if(!head) {
+            return;
+        }
+        if(head->data == value) {
+            deleteFront();
+        } else if (tail->data == value) {
+            deleteEnd();
+        } else {
+            for(Node * tempHead = head->next; tempHead != nullptr; tempHead = tempHead->next) {
+                if(value == tempHead->data) {
+                    tempHead = deleteAndLink(tempHead);
+                }
+            }
+        }
+    }
 };
 
 
 int main(void) {
     DoublyLinkedList myLinkedList;
-    myLinkedList.insertEnd(10);
-    myLinkedList.insertEnd(20);
-    myLinkedList.insertEnd(30);
-    myLinkedList.insertEnd(40);
-    myLinkedList.insertSorted(15);
-    myLinkedList.insertSorted(95);
-    myLinkedList.insertSorted(-10);
     myLinkedList.insertFront(0);
-    myLinkedList.deleteFront();
-    myLinkedList.deleteFront();
+    myLinkedList.deleteNodeWithKey(0);
+    myLinkedList.insertEnd(1);
+    myLinkedList.insertEnd(2);
+    myLinkedList.insertEnd(3);
     myLinkedList.print();
 
 }
