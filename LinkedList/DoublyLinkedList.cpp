@@ -220,7 +220,6 @@ class DoublyLinkedList {
 
 int main(void) {
     DoublyLinkedList myLinkedList;
-    myLinkedList.insertFront(0);
     myLinkedList.insertEnd(1);
     myLinkedList.insertEnd(2);
     myLinkedList.insertEnd(3);
