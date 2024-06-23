@@ -43,6 +43,14 @@ class Stack {
             arr[++top] = value;
         }
 
+        bool isEmpty() { // O(1) time O(1) space
+            if(top == -1) {
+                return true;
+            }
+
+            return false;
+        }
+
         int pop() { // O(1) time O(1) space
             //we can use here two approches either we lazy delete or we make a new array that doesnt have the element
 
@@ -50,9 +58,43 @@ class Stack {
         }
 
         int peek() { // O(1) time O(1) space
+
+            if(isEmpty()) {
+                return -1;
+            }
+
             return arr[top];
         }
+
 };
+
+string reverseSubwords(string text) { // O(1) time O(1) 
+    string newText = "";
+    Stack tempStack(text.length());
+
+    for(int i = 0; i < text.length(); i++) {
+        int charcterAsciiCode = text.at(i); 
+
+        if(charcterAsciiCode != 32) {
+            tempStack.push(charcterAsciiCode);
+        } else {
+            while(!tempStack.isEmpty()) {
+                newText+= (char)tempStack.peek();
+                tempStack.pop();
+            }
+
+            newText+= " ";
+        }
+
+    }
+
+    while(!tempStack.isEmpty()) {
+        newText+= (char)tempStack.peek();
+        tempStack.pop();
+    }
+
+    return newText;
+}
 
 
 int main(void) {
@@ -60,5 +102,7 @@ int main(void) {
     myStack.push(10);
     myStack.push(20);
     myStack.print();
+    string reversedSubword = reverseSubwords("abc d efg xy");
+    cout<<reversedSubword;
     cout<<myStack.peek();
 }
