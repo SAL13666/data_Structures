@@ -68,7 +68,7 @@ class Stack {
 
 };
 
-string reverseSubwords(string text) { // O(1) time O(1) 
+string reverseSubwords(string text) { // O(n) time O(n) space
     string newText = "";
     Stack tempStack(text.length());
 
@@ -96,13 +96,38 @@ string reverseSubwords(string text) { // O(1) time O(1)
     return newText;
 }
 
+int reverseNumber(int number) { // O(n) time O(n) space
+    if(number == 0) {
+        return -1;
+    }
+
+    string tempNumber = to_string(number);
+    int newNumber = 0;
+    Stack myStack(to_string(number).length());
+    int tens = 1;
+
+    for(int i = 0; i < tempNumber.length(); i++) {
+        myStack.push(number % 10);
+        number /= 10;
+    }
+
+    while(!myStack.isEmpty()) {
+        newNumber = tens * myStack.peek() + newNumber;
+        tens *= 10;
+        myStack.pop();
+    }
+
+    return newNumber;
+}
+
 
 int main(void) {
     Stack myStack(1);
     myStack.push(10);
     myStack.push(20);
     myStack.print();
-    string reversedSubword = reverseSubwords("abc d efg xy");
-    cout<<reversedSubword;
-    cout<<myStack.peek();
+    cout<<reverseNumber(123);
+    // string reversedSubword = reverseSubwords("abc d efg xy");
+    // cout<<reversedSubword;
+    // cout<<myStack.peek();
 }
