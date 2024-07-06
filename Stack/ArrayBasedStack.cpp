@@ -121,12 +121,72 @@ int reverseNumber(int number) { // O(n) time O(n) space
 }
 
 
+bool isValidParentheses(string text) {// O(n) time O(n) space
+    if(text.length() <= 1) {
+        return false;
+    }
+
+    string curlyBrackets = "{}";
+    string squareBrackets = "[]";
+    string parentheses = "()";
+    Stack myStack(text.length());
+
+    for(int i = 0; i < text.length(); i++) {
+        if(text[i] == '(' || text[i] == '{' || text[i] == '[') {
+            myStack.push((int)text[i]);
+        } else {
+
+            switch (text[i])
+            {
+            case ']':
+                if((char)myStack.peek() == '[') {
+                    myStack.pop();
+                } else {
+                    return false;
+                }
+
+                break;
+            
+            case '}':
+                if((char)myStack.peek() == '{') {
+                    myStack.pop();
+                } else {
+                    return false;
+                }
+
+                break;
+            
+            case ')':
+                if((char)myStack.peek() == '(') {
+                    myStack.pop();
+                } else {
+                    return false;
+                }
+
+                break;
+            
+            default:
+                return false;
+                break;
+            }
+        }
+
+    }
+
+    if(!myStack.isEmpty()) {
+        return false;
+    }
+
+    return true;
+}
+
 int main(void) {
-    Stack myStack(1);
-    myStack.push(10);
-    myStack.push(20);
-    myStack.print();
-    cout<<reverseNumber(123);
+    // Stack myStack(1);
+    // myStack.push(10);
+    // myStack.push(20);
+    // myStack.print();
+    // cout<<reverseNumber(123);
+    cout<<isValidParentheses("[[]]({})()");
     // string reversedSubword = reverseSubwords("abc d efg xy");
     // cout<<reversedSubword;
     // cout<<myStack.peek();
