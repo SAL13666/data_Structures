@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 class BinaryTree {
     private:
@@ -12,6 +13,35 @@ class BinaryTree {
         };
 
         Node* root {};
+
+        Node* getNodeUsingPath(vector<char> path) {
+            Node* current = root;
+
+            for(auto i: path) {
+                if(i == 'L') {
+
+                    if(current->left) {
+                        current = current->left;
+                    } else {
+                        current->left = new Node(-1);
+                        current = current->left;
+                    }
+
+                } else if(i == 'R') {
+
+                    if(current->right) {
+                        current = current->right;
+                    } else {
+                        current->right = new Node(-1);
+                        current = current->right;
+                    }
+
+                } else {
+                    cout <<"wrong direction format "<< i << endl;
+                }
+            }
+            return current;
+        }
 
         void clear(Node *root) { // O(n) time O(1) space
             if(!root)
@@ -47,11 +77,34 @@ class BinaryTree {
             print(root);
             cout<< endl;
         }
+
+        bool add(int value, vector<char> path) { // O(n) time O(1) space
+
+            //there is a bug where if the user adds another charcter besides R or L the program will crash
+
+            Node* current = nullptr;
+
+            if(path.empty()) {
+                root->data = value;
+                return false;
+            }
+
+            current = getNodeUsingPath(path);
+
+            current->data = value;
+            return true;
+        }
 };
 
 
 
 
 int main() {
-
+    BinaryTree myBinaryTree = BinaryTree(1);
+    myBinaryTree.add(2, {'L'});
+    myBinaryTree.add(3, {'R'});
+    myBinaryTree.add(4, {'L', 'L'});
+    myBinaryTree.add(5, {'L', 'R'});
+    myBinaryTree.add(6, {'R', 'L'});
+    myBinaryTree.print();
 }
