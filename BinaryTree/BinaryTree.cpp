@@ -14,7 +14,7 @@ class BinaryTree {
 
         Node* root {};
 
-        Node* getNodeUsingPath(vector<char> path) {
+        Node* getNodeUsingPath(vector<char> path) { // O(n) time O(1) space
             Node* current = root;
 
             for(auto i: path) {
@@ -61,6 +61,18 @@ class BinaryTree {
             print(node->right);
         }
 
+        int findMax(Node *node) { // O(n) time O(n) space
+            if(!node) {
+                return INT_MIN;
+            }
+            
+            int current = node->data;
+            int firstMax = findMax(node->right);
+            int secondMax = findMax(node->left);
+
+            return max(current, max(firstMax,secondMax));
+        }
+
     public:
         BinaryTree(int rootValue): root(new Node(rootValue)) {};
 
@@ -94,6 +106,10 @@ class BinaryTree {
             current->data = value;
             return true;
         }
+
+        int findMax() { // O(n) time O(n) space
+            return findMax(root);
+        }
 };
 
 
@@ -106,5 +122,5 @@ int main() {
     myBinaryTree.add(4, {'L', 'L'});
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
-    myBinaryTree.print();
+    cout << myBinaryTree.findMax();
 }
