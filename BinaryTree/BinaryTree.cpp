@@ -73,6 +73,18 @@ class BinaryTree {
             return max(current, max(firstMax,secondMax));
         }
 
+        int findHeight(Node *node) {// O(n) time O(h) space
+            if(!node) {
+                return 0;
+            }
+
+            int rightHeight = findHeight(node->right);
+            int leftHeight = findHeight(node->left);
+
+             
+            return max(leftHeight, rightHeight) + 1;
+        }
+
     public:
         BinaryTree(int rootValue): root(new Node(rootValue)) {};
 
@@ -110,6 +122,10 @@ class BinaryTree {
         int findMax() { // O(n) time O(n) space
             return findMax(root);
         }
+
+        int findHeight() { // O(n) time O(h) space
+            return findHeight(root) -1;
+        }
 };
 
 
@@ -122,5 +138,5 @@ int main() {
     myBinaryTree.add(4, {'L', 'L'});
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
-    cout << myBinaryTree.findMax();
+    cout << myBinaryTree.findHeight();
 }
