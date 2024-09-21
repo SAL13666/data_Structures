@@ -95,6 +95,19 @@ class BinaryTree {
             return rightNodesCount + leftNodesCount + 1;
         }
 
+        int getTotalLeafNodes(Node *node) { //O(n) time O(n) space
+            if(!node)
+                return 0;
+
+            if(!node->left && !node->right)
+                return 1;
+
+            int rightLeafNodesCount = getTotalLeafNodes(node->right);
+            int leftLeafNodesCount = getTotalLeafNodes(node->left);
+
+            return rightLeafNodesCount + leftLeafNodesCount; 
+        }
+
     public:
         BinaryTree(int rootValue): root(new Node(rootValue)) {};
 
@@ -140,6 +153,11 @@ class BinaryTree {
         int getTotalNodesNumber() { //O(n) time O(n) space
             return getTotalNodesNumber(root);
         }
+
+        int getTotalLeafNodes() { //O(n) time O(n) space
+            return getTotalLeafNodes(root);
+        }
+
 };
 
 
@@ -152,5 +170,5 @@ int main() {
     myBinaryTree.add(4, {'L', 'L'});
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
-    cout << myBinaryTree.getTotalNodesNumber();
+    cout << myBinaryTree.getTotalLeafNodes();
 }
