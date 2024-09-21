@@ -108,6 +108,19 @@ class BinaryTree {
             return rightLeafNodesCount + leftLeafNodesCount; 
         }
 
+        bool containsNode(Node *node, int value) {
+            if(!node)
+                return false;
+
+            if(value == node->data)
+                return true;
+
+            bool rightTree = containsNode(node->right, value);
+            bool leftTree = containsNode(node->left, value);
+
+            return rightTree || leftTree;
+        }
+
     public:
         BinaryTree(int rootValue): root(new Node(rootValue)) {};
 
@@ -158,6 +171,9 @@ class BinaryTree {
             return getTotalLeafNodes(root);
         }
 
+        bool containsNode(int value) {
+            return containsNode(root, value);
+        }
 };
 
 
@@ -170,5 +186,5 @@ int main() {
     myBinaryTree.add(4, {'L', 'L'});
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
-    cout << myBinaryTree.getTotalLeafNodes();
+    cout << myBinaryTree.containsNode(7);
 }
