@@ -108,7 +108,7 @@ class BinaryTree {
             return rightLeafNodesCount + leftLeafNodesCount; 
         }
 
-        bool containsNode(Node *node, int value) {
+        bool containsNode(Node *node, int value) { //O(n) time O(n) space
             if(!node)
                 return false;
 
@@ -119,6 +119,20 @@ class BinaryTree {
             bool leftTree = containsNode(node->left, value);
 
             return rightTree || leftTree;
+        }
+
+        bool isPerfect(Node *node, int height = -1) { //O(n) time O(1) space
+            if(height == -1)
+                height = findHeight();
+
+            if(!node->left && node->right || node->left && !node->right)
+                return false;
+
+            if(!node->left && !node->right) 
+                return height == 0;
+
+            return isPerfect(node->left, height - 1) && isPerfect(node->right, height - 1);
+
         }
 
     public:
@@ -171,8 +185,12 @@ class BinaryTree {
             return getTotalLeafNodes(root);
         }
 
-        bool containsNode(int value) {
+        bool containsNode(int value) { //O(n) time O(n) space
             return containsNode(root, value);
+        }
+
+        bool isPerfect() { //O(n) time O(1) space
+            return isPerfect(root);
         }
 };
 
@@ -186,5 +204,6 @@ int main() {
     myBinaryTree.add(4, {'L', 'L'});
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
-    cout << myBinaryTree.containsNode(7);
+    myBinaryTree.add(7, {'R', 'R'});
+    cout << myBinaryTree.isPerfect();
 }
