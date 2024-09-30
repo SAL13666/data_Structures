@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <stack>
 using namespace std;
 class BinaryTree {
     private:
@@ -192,6 +193,26 @@ class BinaryTree {
         bool isPerfect() { //O(n) time O(1) space
             return isPerfect(root);
         }
+
+        void DFSPrint() { //O(n) time O(n) space
+
+            if(!root)
+                return;
+        
+            stack<Node*>myTreeStack;
+            myTreeStack.push(root);
+
+            while(!myTreeStack.empty()) {
+                Node* current = myTreeStack.top();
+                myTreeStack.pop();
+
+                cout<<current->data <<" ";
+                if(current->right)
+                    myTreeStack.push(current->right);
+                if(current->left)
+                    myTreeStack.push(current->left);
+            }
+        }
 };
 
 
@@ -205,5 +226,5 @@ int main() {
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
     myBinaryTree.add(7, {'R', 'R'});
-    cout << myBinaryTree.isPerfect();
+    myBinaryTree.DFSPrint();
 }
