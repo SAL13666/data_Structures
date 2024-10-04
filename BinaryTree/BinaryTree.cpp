@@ -136,6 +136,17 @@ class BinaryTree {
 
         }
 
+        int diameter(Node* current, int& result) {
+            if(!current)
+                return 0;
+
+            int left = diameter(current->left, result);
+            int right = diameter(current->right, result);
+
+            result = max(result, left + right);
+
+            return max(left, right) + 1;
+        }
     public:
         BinaryTree(int rootValue): root(new Node(rootValue)) {};
 
@@ -198,7 +209,7 @@ class BinaryTree {
 
             if(!root)
                 return;
-        
+
             stack<Node*>myTreeStack;
             myTreeStack.push(root);
 
@@ -213,6 +224,12 @@ class BinaryTree {
                     myTreeStack.push(current->left);
             }
         }
+
+        int treeDiameter() {
+            int result = 0;
+            diameter(root, result);
+            return result;
+        }
 };
 
 
@@ -226,5 +243,5 @@ int main() {
     myBinaryTree.add(5, {'L', 'R'});
     myBinaryTree.add(6, {'R', 'L'});
     myBinaryTree.add(7, {'R', 'R'});
-    myBinaryTree.DFSPrint();
+    myBinaryTree.print();
 }
