@@ -39,6 +39,16 @@ class BinarySearchTree {
 
             }
         }
+
+        bool _search(Node *current, int value) { // O(n) time O(h) space
+            if(current->data == value)
+                return true;
+            
+            if(value > current->data)
+                return current->right && _search(current->right, value);
+            else if(value < current->data)
+                return current->left && _search(current->left, value);
+        }
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -52,6 +62,10 @@ class BinarySearchTree {
             }
 
             _insert(root, value);
+        }
+
+        bool search(int value) {
+            return _search(root, value);
         }
     };
 
