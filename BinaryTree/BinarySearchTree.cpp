@@ -41,13 +41,17 @@ class BinarySearchTree {
         }
 
         bool _search(Node *current, int value) { // O(n) time O(h) space
+
+            if(!current)
+                return false;
+
             if(current->data == value)
                 return true;
             
             if(value > current->data)
-                return current->right && _search(current->right, value);
-            else if(value < current->data)
-                return current->left && _search(current->left, value);
+                return _search(current->right, value);
+            else
+                return _search(current->left, value);
         }
     
         void _print(Node *node) const { // O(n) time O(h) space
@@ -92,6 +96,6 @@ int main() {
     myBST.insert(70);
     myBST.insert(60);
     myBST.insert(73);
-    cout<< myBST.search(73);
+    cout<< myBST.search(73)<<endl;
     myBST.print();
 }
