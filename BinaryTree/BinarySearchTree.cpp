@@ -49,6 +49,15 @@ class BinarySearchTree {
             else if(value < current->data)
                 return current->left && _search(current->left, value);
         }
+    
+        void _print(Node *node) const { // O(n) time O(h) space
+            if(!node)
+                return;
+
+            _print(node->left);
+            cout<<node->data<<" ";
+            _print(node->right);
+        }
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -67,9 +76,22 @@ class BinarySearchTree {
         bool search(int value) {
             return _search(root, value);
         }
+
+        void print() {
+            _print(root);
+        }
     };
 
 
 int main() {
     BinarySearchTree myBST(50);
+    myBST.insert(50);
+    myBST.insert(20);
+    myBST.insert(15);
+    myBST.insert(35);
+    myBST.insert(70);
+    myBST.insert(60);
+    myBST.insert(73);
+    cout<< myBST.search(73);
+    myBST.print();
 }
