@@ -15,7 +15,7 @@ class BinaryTree {
 
         Node* root {};
 
-        Node* getNodeUsingPath(vector<char> path) { // O(n) time O(1) space
+        Node* getNodeUsingPath(vector<char> path) { // O(n) time O(h) space
             Node* current = root;
 
             for(auto i: path) {
@@ -44,7 +44,7 @@ class BinaryTree {
             return current;
         }
 
-        void clear(Node *root) { // O(n) time O(1) space
+        void clear(Node *root) { // O(n) time O(h) space
             if(!root)
                 return;
 
@@ -53,7 +53,7 @@ class BinaryTree {
             delete root;
         }
 
-        void print(Node *node) const { // O(n) time O(1) space
+        void print(Node *node) const { // O(n) time O(h) space
             if(!node)
                 return;
 
@@ -62,7 +62,7 @@ class BinaryTree {
             print(node->right);
         }
 
-        int findMax(Node *node) { // O(n) time O(n) space
+        int findMax(Node *node) { // O(n) time O(h) space
             if(!node) {
                 return INT_MIN;
             }
@@ -86,7 +86,7 @@ class BinaryTree {
             return max(leftHeight, rightHeight) + 1;
         }
 
-       int getTotalNodesNumber(Node *node) { //O(n) time O(n) space
+       int getTotalNodesNumber(Node *node) { //O(n) time O(h) space
             if(!node) {
                 return 0;
             }
@@ -96,7 +96,7 @@ class BinaryTree {
             return rightNodesCount + leftNodesCount + 1;
         }
 
-        int getTotalLeafNodes(Node *node) { //O(n) time O(n) space
+        int getTotalLeafNodes(Node *node) { //O(n) time O(h) space
             if(!node)
                 return 0;
 
@@ -109,7 +109,7 @@ class BinaryTree {
             return rightLeafNodesCount + leftLeafNodesCount; 
         }
 
-        bool containsNode(Node *node, int value) { //O(n) time O(n) space
+        bool containsNode(Node *node, int value) { //O(n) time O(h) space
             if(!node)
                 return false;
 
@@ -122,7 +122,7 @@ class BinaryTree {
             return rightTree || leftTree;
         }
 
-        bool isPerfect(Node *node, int height = -1) { //O(n) time O(1) space
+        bool isPerfect(Node *node, int height = -1) { //O(n) time O(h) space
             if(height == -1)
                 height = findHeight();
 
@@ -136,7 +136,7 @@ class BinaryTree {
 
         }
 
-        int diameter(Node* current, int& result) {
+        int diameter(Node* current, int& result) { //O(n) time O(h) space
             if(!current)
                 return 0;
 
@@ -154,17 +154,17 @@ class BinaryTree {
             clear(root);
         }
 
-        void clear() { // O(n) time O(1) space
+        void clear() { 
             clear(root);
             root = nullptr;
         }
 
-        void print() const { // O(n) time O(1) space
+        void print() const {
             print(root);
             cout<< endl;
         }
 
-        bool add(int value, vector<char> path) { // O(n) time O(1) space
+        bool add(int value, vector<char> path) {
 
             //there is a bug where if the user adds another charcter besides R or L the program will crash
 
@@ -181,27 +181,27 @@ class BinaryTree {
             return true;
         }
 
-        int findMax() { // O(n) time O(n) space
+        int findMax() {
             return findMax(root);
         }
 
-        int findHeight() { // O(n) time O(h) space
+        int findHeight() {
             return findHeight(root) -1;
         }
 
-        int getTotalNodesNumber() { //O(n) time O(n) space
+        int getTotalNodesNumber() {
             return getTotalNodesNumber(root);
         }
 
-        int getTotalLeafNodes() { //O(n) time O(n) space
+        int getTotalLeafNodes() {
             return getTotalLeafNodes(root);
         }
 
-        bool containsNode(int value) { //O(n) time O(n) space
+        bool containsNode(int value) {
             return containsNode(root, value);
         }
 
-        bool isPerfect() { //O(n) time O(1) space
+        bool isPerfect() {
             return isPerfect(root);
         }
 
