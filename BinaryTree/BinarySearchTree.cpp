@@ -62,6 +62,20 @@ class BinarySearchTree {
             cout<<node->data<<" ";
             _print(node->right);
         }
+
+        bool _isBST(Node *current, int min = INT_MIN, int max = INT_MAX) { // O(n) time O(h) space
+            if(!current)
+                return true;
+
+            if(current->data <= min || current->data >= max)
+                return false;
+
+              bool left = _isBST(current->left, min, current->data);  
+
+              bool right = _isBST(current->right, current->data, max);
+
+              return left && right;  
+        }
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -83,6 +97,10 @@ class BinarySearchTree {
 
         void print() {
             _print(root);
+        }
+    
+        bool isBST(Node *treeRoot) {
+            return _isBST(treeRoot);
         }
     };
 
