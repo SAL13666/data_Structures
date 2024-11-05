@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class BinarySearchTree {
@@ -76,6 +77,19 @@ class BinarySearchTree {
 
               return left && right;  
         }
+
+        Node* _sortedArrayToBST(vector <int> &values, int start, int end) { // O(n) time O(h) space
+            if(start > end)
+                return nullptr;
+
+            int currentIndex = (start + end) / 2;
+            Node *treeRoot = new Node(values[currentIndex]);
+
+            treeRoot->left = _sortedArrayToBST(values, start, currentIndex - 1);
+            treeRoot->right = _sortedArrayToBST(values, currentIndex + 1, end);
+
+            return treeRoot;
+        }
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -101,6 +115,10 @@ class BinarySearchTree {
     
         bool isBST(Node *treeRoot) {
             return _isBST(treeRoot);
+        }
+    
+        Node* sortedArrayToBST(vector <int> values) {
+            _sortedArrayToBST(values, 0, values.size());
         }
     };
 
