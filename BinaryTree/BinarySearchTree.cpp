@@ -90,6 +90,16 @@ class BinarySearchTree {
 
             return treeRoot;
         }
+
+        int _lowestCommonAncestor(Node *current, int firstNumber, int secondNumber) { // O(n) time O(h) space
+            if(firstNumber < current->data && secondNumber < current->data)
+                return _lowestCommonAncestor(current->left, firstNumber, secondNumber);
+            else if(firstNumber > current->data && secondNumber > current->data)
+                return _lowestCommonAncestor(current->right, firstNumber, secondNumber);
+            else
+                return current->data;
+        }
+
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -119,6 +129,10 @@ class BinarySearchTree {
     
         Node* sortedArrayToBST(vector <int> values) {
             _sortedArrayToBST(values, 0, values.size());
+        }
+    
+        int lowestCommonAncestor(int firstNumber, int secondNumber) {
+            return _lowestCommonAncestor(root, firstNumber, secondNumber);
         }
     };
 
