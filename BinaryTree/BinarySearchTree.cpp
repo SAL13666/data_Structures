@@ -100,6 +100,41 @@ class BinarySearchTree {
                 return current->data;
         }
 
+        Node* _findMin(Node* current) { // O(n) time O(h) space
+            if(!current)
+                return nullptr;
+
+            if(!current->left)
+                return current;
+
+            return findMin(current->left);
+        }
+
+        bool _findChain(Node* current, int value, vector<Node*> &chain) { // O(n) time O(h) space
+            if(!current)
+                return false;
+
+            chain.push_back(current);
+
+            if(current->data == value)
+                return true;
+
+            if(current->data > value)
+                return findChain(current->left, value, chain);
+
+            return findChain(current->right, value, chain);
+        }
+
+        Node* _getNextFromChain(vector<Node*> &chain) { // O(1) time O(1) space
+            if(chain.empty())
+                return nullptr;
+
+            Node* next = chain.back();
+            chain.pop_back();
+
+            return next;
+        }
+
     public:
         BinarySearchTree(int rootValue): root(new Node(rootValue)) {};
         ~BinarySearchTree() {
@@ -134,6 +169,31 @@ class BinarySearchTree {
         int lowestCommonAncestor(int firstNumber, int secondNumber) {
             return _lowestCommonAncestor(root, firstNumber, secondNumber);
         }
+    
+        pair<bool, int> successor(int value) {  // O(n) time O(h) space
+            vector <Node*> chain;
+
+            if(!_findChain(root, value, chain))
+                return make_pair(false, -1);
+
+            Node* child = _getNextFromChain(chain);
+
+            if(child->right)
+                return make_pair(true, _findMin(child->right)->data);
+
+            Node* parent = _getNextFromChain(chain);
+
+            while(parent->right == child) {
+                child = parent;
+                parent = _getNextFromChain(chain);
+            }
+
+            if(parent)
+                return make_pair(true, parent->data);
+
+            return make_pair(false, -1);
+        }
+
     };
 
 
